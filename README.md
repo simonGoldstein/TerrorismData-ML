@@ -4,7 +4,7 @@ By Erin Clark, Mason English, Simon Goldstein, Austin Promenschenkel
 
 ### About
 This is a machine learning project to both learn about machine learning through predicting information about terrorism attacks.
-We got our data from Kaggle.
+We got our data from Kaggle. The Cookbook is the codebook from our dataset. The data is a link to kaggle. And my github copy is a link to this github. 
 
 Link to [cookbook](https://start.umd.edu/gtd/downloads/Codebook.pdf)                                        
                                                                                                             
