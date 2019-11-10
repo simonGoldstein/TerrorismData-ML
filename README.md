@@ -10,4 +10,22 @@ Link to [cookbook](https://start.umd.edu/gtd/downloads/Codebook.pdf)
                                                                                                             
 Link to our [data](https://www.kaggle.com/START-UMD/gtd)                                                    
                                                                                                             
-My github copy of the [zipped file](https://github.com/simonGoldstein/TerrorismData-ML/blob/master/gtd.zip)
+My github copy of the [this project](https://github.com/simonGoldstein/TerrorismData-ML/blob/master/gtd.zip)
+
+### How to Run
+
+Download the repo
+
+    git clone https://github.com/simonGoldstein/TerrorismData-ML.git
+
+Install Libraries
+    
+    pip install numpy
+    pip install pandas
+    pip install matplotlib
+    pip install sklearn
+
+On Linux run:
+    
+    unzip gtd.zip -d used_data
+    python final_project.py
