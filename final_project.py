@@ -61,10 +61,24 @@ dataset.describe()
 #for col in dataset.columns:
 #  print(col)
 
-"""#### Manually Clean the data
+"""#### Manually Clean the data """
 
-Separate Features and Targets
-"""
+#Find columns with NaN's and those without
+#print(dataset.isnull().sum())\
+fullNames = []
+emptynames = []
+for (colName, colData) in dataset.iteritems():
+  #print(colName)
+  #print(colData.isnull().sum())
+  if colData.isnull().sum() == 0:
+    fullNames.append(colName)
+  else:
+    emtpyNames.append(colName)
+
+for emptyName in emptyNames:
+  dataset.drop(emptyName, inline = True)
+  
+"""Separate Features and Targets"""
 
 #Create X and y
 y = dataset[['gname', 'gsubname', 'gname2', 'gsubname2','gname3', 'gsubname3', 'crit1', 'crit2', 'crit3']].copy()
