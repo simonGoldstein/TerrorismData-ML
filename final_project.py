@@ -73,7 +73,7 @@ dataset.describe()
 #Find columns with NaN's and those without
 #print(dataset.isnull().sum())\
 fullNames = []
-emptynames = []
+emptyNames = []
 for (colName, colData) in dataset.iteritems():
   #print(colName)
   #print(colData.isnull().sum())
@@ -82,9 +82,8 @@ for (colName, colData) in dataset.iteritems():
   else:
     emtpyNames.append(colName)
 
-for emptyName in emptyNames:
-  dataset.drop(emptyName, inline = True)
-  
+dataset.drop(emptyNames, inline = True, axis = 1)
+
 """Separate Features and Targets"""
 
 #Create X and y
