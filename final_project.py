@@ -25,7 +25,6 @@ from sklearn.metrics import classification_report, confusion_matrix, f1_score
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.feature_selection import SelectKBest, mutual_info_regression, RFE
 from sklearn.linear_model import LinearRegression, LassoCV
-from sklearn.decomposition import PCA, KernelPCA
 
 # %matplotlib inline
 plt.style.use("ggplot")
@@ -40,6 +39,14 @@ My github copy of the [zipped file](https://github.com/simonGoldstein/TerrorismD
 """
 
 #!apt install unzip
+#!apt install git
+#!git clone https://github.com/simonGoldstein/TerrorismData-ML.git
+#!unzip TerrorismData-ML/gtd.zip -d used_data
+#!rm -rf TerrorismData-ML
+
+dataset = pd.read_csv('used_data/globalterrorismdb_0718dist.csv' ,encoding='ISO-8859-1' )
+
+#!rm -rf terrorData.csv
 #!apt install git
 #!git clone https://github.com/simonGoldstein/TerrorismData-ML.git
 #!unzip TerrorismData-ML/gtd.zip -d used_data
@@ -118,11 +125,11 @@ X_pca = pca_tf.transform(X)
 X_train, X_test, y_train, y_test = train_test_split(X_pca, y, random_state=0, test_size=0.2)
 X_model, X_valid, y_model, y_valid = train_test_split(X_train, y_train, random_state=0, test_size=0.2)
 
-print(f"All Data:        {len(X)} points")
-print(f"Training data:   {len(X_train)} points")
-print(f"Testing data:    {len(X_test)} points")
-print(f"Modeling data:   {len(X_model)} points")
-print(f"Validation data: {len(X_valid)} points")
+#print(f"All Data:        {len(X)} points")
+#print(f"Training data:   {len(X_train)} points")
+#print(f"Testing data:    {len(X_test)} points")
+#print(f"Modeling data:   {len(X_model)} points")
+#print(f"Validation data: {len(X_valid)} points")
 
 """### Model TIME!!!"""
 
