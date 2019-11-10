@@ -80,7 +80,7 @@ for (colName, colData) in dataset.iteritems():
   if colData.isnull().sum() == 0:
     fullNames.append(colName)
   else:
-    emtpyNames.append(colName)
+    emptyNames.append(colName)
 
 dataset.drop(emptyNames, inline = True, axis = 1)
 
