@@ -8,7 +8,7 @@ Original file is located at
 
 # Premilinary Model
 
-This is the preliminary model for Blaster's Bunch. 
+This is the preliminary model for Blaster's Bunch.
 ## YEEEEEET
 
 ### These are our imports so we can have things
@@ -39,16 +39,16 @@ Link to our [data](https://www.kaggle.com/START-UMD/gtd)
 My github copy of the [zipped file](https://github.com/simonGoldstein/TerrorismData-ML/blob/master/gtd.zip)
 """
 
-!apt install unzip
-!apt install git
-!git clone https://github.com/simonGoldstein/TerrorismData-ML.git
-!unzip TerrorismData-ML/gtd.zip -d used_data
-!rm -rf TerrorismData-ML
+#!apt install unzip
+#!apt install git
+#!git clone https://github.com/simonGoldstein/TerrorismData-ML.git
+#!unzip TerrorismData-ML/gtd.zip -d used_data
+#!rm -rf TerrorismData-ML
 
 dataset = pd.read_csv('used_data/globalterrorismdb_0718dist.csv' ,encoding='ISO-8859-1' )
 
-!rm -rf terrorData.csv
-!rm -rf used_data
+#!rm -rf terrorData.csv
+#!rm -rf used_data
 dataset.head()
 #dataset.describe()
 
@@ -58,7 +58,7 @@ dataset.head()
 dataset.describe()
 
 #Uncomment this code for list all column names
-#for col in dataset.columns: 
+#for col in dataset.columns:
 #  print(col)
 
 """#### Manually Clean the data
@@ -137,12 +137,12 @@ def get_knn_training_scores(ks, model_features, model_labels):
         ks (int iterable): iterable of all the k values to apply
         model_features (iterable): the features from the model set to train on
         model_labels (iterable): the labels from the model set to train on
-        
+
     Returns:
         dictionary: key is the k value and value is the weighted f1_score on the training set
     """
     dict = {}
-    
+
     for k in ks:
       # Step 1 - Initialize model with parameters
       knn = KNeighborsClassifier(n_neighbors=k)
@@ -150,9 +150,9 @@ def get_knn_training_scores(ks, model_features, model_labels):
       knn.fit(model_features, model_labels)
       # Step 3 - Predict the validation data
       validationPredictions = knn.predict(model_features)
-          
+
       dict[k] = f1_score(model_labels, validationPredictions, average="weighted")
-      
+
     return dict
 
 def get_knn_validation_scores(ks, model_features, model_labels, validation_features, validation_labels):
@@ -163,12 +163,12 @@ def get_knn_validation_scores(ks, model_features, model_labels, validation_featu
         model_labels (iterable): the labels from the model set to train on
         validation_features (iterable): the features from the validation set to test on
         validation_labels (iterable): the labels from the validation set to test on
-        
+
     Returns:
         dictionary: key is the k value and value is the weighted f1_score on the validation set
     """
     dict = {}
-    
+
     for k in ks:
       # Step 1 - Initialize model with parameters
       knn = KNeighborsClassifier(n_neighbors=k)
@@ -176,9 +176,9 @@ def get_knn_validation_scores(ks, model_features, model_labels, validation_featu
       knn.fit(model_features, model_labels)
       # Step 3 - Predict the validation data
       validationPredictions = knn.predict(model_features)
-          
+
       dict[k] = f1_score(model_labels, validationPredictions, average="weighted")
-      
+
     return dict
 
 #find best k
