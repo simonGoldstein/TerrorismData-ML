@@ -4,7 +4,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import sklearn as sk
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import classification_report, confusion_matrix, f1_score
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, f1_score
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.feature_selection import SelectKBest, mutual_info_regression, RFE
 from sklearn.linear_model import LinearRegression, LassoCV
@@ -62,8 +62,9 @@ knn = KNeighborsClassifier(n_neighbors=k)
 knn.fit(X_model, y_model)
 # Step 3 - Predict the validation data
 validationPredictions = knn.predict(X_valid)
-
+y_pred = knn.predict(X_test)
 #validation step
-print(confusion_matrix(y_valid, validationPredictions))
-print(classification_report(y_valid,validationPredictions))
-print(f1_score(y_valid, validationPredictions, average="weighted"))
+#print(confusion_matrix(y_valid, validationPredictions))
+#print(classification_report(y_valid,validationPredictions))'
+print("The F1 score is: ", f1_score(y_valid, validationPredictions, average="weighted"))
+print("The Accuracy of the model is: ", accuracy_score(y_test, y_pred))
