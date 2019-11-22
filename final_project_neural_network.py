@@ -61,9 +61,9 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0, test_s
 """### Model TIME!!!"""
 dim = X_train.shape[1]
 
-num_classes = len(terrorist_encoder.get_params())
+num_classes = len(terrorist_encoder.classes_)
 
-print(num_classes)
+print("Number of terrorist groups: " + str(num_classes))
 
 layers = [Dense(36, input_shape=(dim,)),
           BatchNormalization(),
@@ -72,10 +72,14 @@ layers = [Dense(36, input_shape=(dim,)),
           Dense(256),
           BatchNormalization(),
           Dense(512),
-          BatchNormalization(),
+          Dropout(0.005),
           Dense(512),
+          Dropout(0.005),
+          Dense(512),
+          Dropout(0.005),
+          Dense(1024),
           BatchNormalization(),
-          Dense(2024),
+          Dense(2048),
           BatchNormalization(),
           Dense(num_classes, activation="softmax")]
 
@@ -83,9 +87,8 @@ model= Sequential(layers)
 model.compile(optimizer='rmsprop',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
-print("#1")
-#print(X_train.shape)
-#print(y_train.shape)
-print(y_train["gint"])
-#model.fit(X_train, y_train["gint"])
-print("#2")
+
+model.fit(X_train, y_train["gint"])
+
+results = model.evaluate(X_test, y_test["gint"])
+print('test loss, test acc:', results)
