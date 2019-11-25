@@ -88,7 +88,7 @@ model.compile(optimizer='rmsprop',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
-model.fit(X_train, y_train["gint"])
+model.fit(X_train, y_train["gint"], epochs=2)
 
 results = model.evaluate(X_test, y_test["gint"])
 print('test loss, test acc:', results)
