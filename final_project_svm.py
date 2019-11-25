@@ -6,7 +6,7 @@ import sklearn as sk
 from sklearn import svm
 from sklearn.metrics import classification_report, confusion_matrix, f1_score
 from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.feature_selection import SelectKBest, mutual_info_regression, RFE
+from sklearn import metrics
 
 plt.style.use("ggplot")
 dataset = pd.read_csv('used_data/globalterrorismdb_0718dist.csv' ,encoding='ISO-8859-1' )
@@ -48,17 +48,27 @@ X.describe()
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0, test_size=0.2)
 X_model, X_valid, y_model, y_valid = train_test_split(X_train, y_train, random_state=0, test_size=0.2)
 
-#model
-hyperparams = {
-    "C": [1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1, 1e2, 1e3, 1e4],
-    "random_state": [0]
-}
+clf = svm.SVC(kernel='linear')
+clf.fit(X_train, y_train.values.ravel())
+y_pred = clf.predict(X_test)
+print("Linear:")
+print("Accuracy: ", metrics.accuracy_score(y_test, y_pred))
+print("Precision: ", metrics.precision_score(y_test, y_pred))
+print("Recall: ", metrics.recall_score(y_test, y_pred))
 
-svc = svm.SVC()
-clf = GridSearchCV(svc, hyperparams, scoring='accuracy')
-clf.fit(X_train, y_train)
+clf = svm.SVC(kernel='rbf', gamma=0.7)
+clf.fit(X_train, y_train.values.ravel())
+y_pred = clf.predict(X_test)
+print("RBF:")
+print("Accuracy: ", metrics.accuracy_score(y_test, y_pred))
+print("Precision: ", metrics.precision_score(y_test, y_pred))
+print("Recall: ", metrics.recall_score(y_test, y_pred))
 
-print(clf.best_score_)
-print(clf.best_params_)
-testScore = clf.score(X_test, y_test)
-print(testScore)
+
+clf = svm.SVC(kernel='poly', degree=3)
+clf.fit(X_train, y_train.values.ravel())
+y_pred = clf.predict(X_test)
+print("Poly:")
+print("Accuracy: ", metrics.accuracy_score(y_test, y_pred))
+print("Precision: ", metrics.precision_score(y_test, y_pred))
+print("Recall: ", metrics.recall_score(y_test, y_pred))
