@@ -48,15 +48,24 @@ X.describe()
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0, test_size=0.2)
 X_model, X_valid, y_model, y_valid = train_test_split(X_train, y_train, random_state=0, test_size=0.2)
 
-clf = svm.SVC(kernel='linear')
-clf.fit(X_train, y_train.values.ravel())
+hyperparams = {
+    "kernel": ["linear"],
+    "degree": [1, 2, 3],
+    "C": [1e-2, 1e-1, 1, 1e2],
+    "random_state": [0]
+}
+
+svc = sk.svm.SVC()
+clf = GridSearchCV( svc, hyperparams, "accuracy" )
+clf.fit(X_train[:][1:1000], y_train[:][1:1000])
 y_pred = clf.predict(X_test)
 print("Linear:")
 print("Accuracy: ", metrics.accuracy_score(y_test, y_pred))
 print("Precision: ", metrics.precision_score(y_test, y_pred))
 print("Recall: ", metrics.recall_score(y_test, y_pred))
 
-clf = svm.SVC(kernel='rbf', gamma=0.7)
+svc = svm.SVC(kernel='rbf', gamma=0.7)
+clf = GridSearchCV( svc, hyperparams, "accuracy" )
 clf.fit(X_train, y_train.values.ravel())
 y_pred = clf.predict(X_test)
 print("RBF:")
@@ -65,7 +74,8 @@ print("Precision: ", metrics.precision_score(y_test, y_pred))
 print("Recall: ", metrics.recall_score(y_test, y_pred))
 
 
-clf = svm.SVC(kernel='poly', degree=3)
+svc = svm.SVC(kernel='poly', degree=3)
+clf = GridSearchCV( svc, hyperparams, "accuracy" )
 clf.fit(X_train, y_train.values.ravel())
 y_pred = clf.predict(X_test)
 print("Poly:")
