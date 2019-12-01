@@ -1,0 +1,13 @@
+[{'label': "Biological", 'value': 1},
+{'label': "Chemical", 'value': 2},
+{'label': "Radiological", 'value': 3},
+{'label': "Nuclear", 'value': 4},
+{'label': "Firearms", 'value': 5},
+{'label': "Explosives", 'value': 6},
+{'label': "Fake Weapons", 'value': 7},
+{'label': "Incendiary", 'value': 8},
+{'label': "Melee", 'value': 9},
+{'label': "Vehicle", 'value': 10},
+{'label': "Sabotage Equipment", 'value': 11},
+{'label': "Other", 'value': 12},
+{'label': "Unknown", 'value': 13}]

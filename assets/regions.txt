@@ -1,0 +1,12 @@
+[{'label': 'North America', 'value': '1'},
+{'label': 'Central America & Caribbean', 'value': '2'},
+{'label': 'South America', 'value': '3'},
+{'label': 'East Asia', 'value': '4'},
+{'label': 'Southeast Asia', 'value': '5'},
+{'label': 'South Asia', 'value': '6'},
+{'label': 'Central Asia', 'value': '7'},
+{'label': 'Western Europe', 'value': '8'},
+{'label': 'Eastern Europe', 'value': '9'},
+{'label': 'Middle East & North Africa', 'value': '10'},
+{'label': 'Sub-Saharan Africa', 'value': '11'},
+{'label': 'Australasia & Oceania', 'value': '12'}]

@@ -2,3 +2,4 @@ globalterrorismdb_0718dist.csv
 .idea/
 __pycache__/
 .vscode/
+.DS_Store
