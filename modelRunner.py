@@ -4,7 +4,7 @@ MODEL_TO_USE = "final_project_knn"
 import importlib.util
 
 def loadModel(modelName = MODEL_TO_USE):
-    spec = importlib.util.spec_from_file_location(MODEL_TO_USE, "models/" + MODEL_TO_USE + ".py")
+    spec = importlib.util.spec_from_file_location(MODEL_TO_USE, "modelCode/" + MODEL_TO_USE + ".py")
     tempModule = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(tempModule)
 
