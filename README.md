@@ -27,5 +27,5 @@ Install Libraries
 
 On Linux run:
     
-    unzip gtd.zip -d used_data
+    unzip gtd.zip -d data
     python final_project.py

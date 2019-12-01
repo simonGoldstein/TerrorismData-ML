@@ -7,9 +7,11 @@ from sklearn import svm
 from sklearn.metrics import classification_report, confusion_matrix, f1_score
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn import metrics
+import os
+currentPath = os.path.dirname(os.path.realpath(__file__))
 
 plt.style.use("ggplot")
-dataset = pd.read_csv('used_data/globalterrorismdb_0718dist.csv' ,encoding='ISO-8859-1' )
+dataset = pd.read_csv(os.path.join(currentPath, '../data/globalterrorismdb_0718dist.csv') ,encoding='ISO-8859-1' )
 
 print(dataset.head())
 print(dataset.describe())

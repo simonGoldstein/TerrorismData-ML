@@ -6,12 +6,13 @@ import sklearn as sk
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, f1_score
 from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_selection import SelectKBest, mutual_info_regression, RFE
 from sklearn.linear_model import LinearRegression, LassoCV
+import os
+currentPath = os.path.dirname(os.path.realpath(__file__))
 
 plt.style.use("ggplot")
-dataset = pd.read_csv('used_data/globalterrorismdb_0718dist.csv' ,encoding='ISO-8859-1' )
+dataset = pd.read_csv(os.path.join(currentPath, '../data/globalterrorismdb_0718dist.csv') ,encoding='ISO-8859-1' )
 
 print(dataset.head())
 print(dataset.describe())
@@ -53,9 +54,19 @@ X.describe()
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0, test_size=0.2)
 X_model, X_valid, y_model, y_valid = train_test_split(X_train, y_train, random_state=0, test_size=0.2)
 
-clf = RandomForestClassifier(n_estimators=100)
-clf.fit(X_train, y_train)
+"""### Model TIME!!!"""
 
-y_pred = clf.predict(X_test)
+k = 1
 
-print("Accuracy: ", metrics.accuracy_score(y_test, y_pred))
+# Step 1 - Initialize model with parameters
+knn = KNeighborsClassifier(n_neighbors=k)
+# Step 2 - Fit the model data
+knn.fit(X_model, y_model)
+# Step 3 - Predict the validation data
+validationPredictions = knn.predict(X_valid)
+y_pred = knn.predict(X_test)
+#validation step
+#print(confusion_matrix(y_valid, validationPredictions))
+#print(classification_report(y_valid,validationPredictions))'
+print("The F1 score is: ", f1_score(y_valid, validationPredictions, average="weighted"))
+print("The Accuracy of the model is: ", accuracy_score(y_test, y_pred))
