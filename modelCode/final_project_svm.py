@@ -50,6 +50,13 @@ X.describe()
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0, test_size=0.2)
 X_model, X_valid, y_model, y_valid = train_test_split(X_train, y_train, random_state=0, test_size=0.2)
 
+#number = 1000
+#X_train = X_train[:][1:number]
+#y_train = y_train[:][1:number]
+
+print("Training")
+
+"""
 hyperparams = {
     "kernel": ["linear"],
     "degree": [1, 2, 3],
@@ -59,12 +66,31 @@ hyperparams = {
 
 svc = sk.svm.SVC()
 clf = GridSearchCV( svc, hyperparams, "accuracy" )
-clf.fit(X_train[:][1:1000], y_train[:][1:1000])
+clf.fit(X_train, y_train)
 y_pred = clf.predict(X_test)
 print("Linear:")
 print("Accuracy: ", metrics.accuracy_score(y_test, y_pred))
-print("Precision: ", metrics.precision_score(y_test, y_pred))
-print("Recall: ", metrics.recall_score(y_test, y_pred))
+print("Precision: ", metrics.precision_score(y_test, y_pred, average='micro'))
+print("model params: ", clf.best_estimator_)
+"""
+svc = sk.svm.SVC(C=0.01, cache_size=200, class_weight=None, coef0=0.0,
+    decision_function_shape='ovr', degree=1, gamma='auto_deprecated',
+    kernel='linear', max_iter=-1, probability=False, random_state=0,
+    shrinking=True, tol=0.001, verbose=False)
+svc.fit(X_train, y_train)
+y_pred = svc.predict(X_test)
+print("Accuracy: ", metrics.accuracy_score(y_test, y_pred))
+print("Precision: ", metrics.precision_score(y_test, y_pred, average='weighted'))
+
+
+
+"""
+hyperparams = {
+    "kernel": ["rbf"],
+    "degree": [1, 2, 3],
+    "C": [1e-2, 1e-1, 1, 1e2],
+    "random_state": [0]
+}
 
 svc = svm.SVC(kernel='rbf', gamma=0.7)
 clf = GridSearchCV( svc, hyperparams, "accuracy" )
@@ -72,9 +98,15 @@ clf.fit(X_train, y_train.values.ravel())
 y_pred = clf.predict(X_test)
 print("RBF:")
 print("Accuracy: ", metrics.accuracy_score(y_test, y_pred))
-print("Precision: ", metrics.precision_score(y_test, y_pred))
-print("Recall: ", metrics.recall_score(y_test, y_pred))
+print("Precision: ", metrics.precision_score(y_test, y_pred, average='micro'))
 
+hyperparams = {
+    "kernel": ["poly"],
+    "degree": [1, 2, 3],
+    "C": [1e-2, 1e-1, 1, 1e2],
+    "random_state": [0],
+    "gamma": ["scale"]
+}
 
 svc = svm.SVC(kernel='poly', degree=3)
 clf = GridSearchCV( svc, hyperparams, "accuracy" )
@@ -82,5 +114,6 @@ clf.fit(X_train, y_train.values.ravel())
 y_pred = clf.predict(X_test)
 print("Poly:")
 print("Accuracy: ", metrics.accuracy_score(y_test, y_pred))
-print("Precision: ", metrics.precision_score(y_test, y_pred))
-print("Recall: ", metrics.recall_score(y_test, y_pred))
+### No precision metrics were accepted without error, only on this one weird
+#print("Precision: ", metrics.precision_score(y_test, y_pred), average='weighted')
+"""
