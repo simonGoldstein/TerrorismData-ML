@@ -11,7 +11,7 @@ import os
 currentPath = os.path.dirname(os.path.realpath(__file__))
 
 plt.style.use("ggplot")
-dataset = pd.read_csv(os.path.join(currentPath, '../data/globalterrorismdb_0718dist.csv') ,encoding='ISO-8859-1' )
+dataset = pd.read_csv(os.path.join(currentPath, 'data/globalterrorismdb_0718dist.csv') ,encoding='ISO-8859-1' )
 
 print(dataset.head())
 print(dataset.describe())
@@ -50,9 +50,9 @@ X.describe()
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0, test_size=0.2)
 X_model, X_valid, y_model, y_valid = train_test_split(X_train, y_train, random_state=0, test_size=0.2)
 
-#number = 1000
-#X_train = X_train[:][1:number]
-#y_train = y_train[:][1:number]
+number = 200
+X_train = X_train[:][1:number]
+y_train = y_train[:][1:number]
 
 print("Training")
 
@@ -78,6 +78,10 @@ svc = sk.svm.SVC(C=0.01, cache_size=200, class_weight=None, coef0=0.0,
     kernel='linear', max_iter=-1, probability=False, random_state=0,
     shrinking=True, tol=0.001, verbose=False)
 svc.fit(X_train, y_train)
+
+import helpers.modelSaving as save
+save.saveSk(svc, f'trainedModels/svm-{number}')
+
 y_pred = svc.predict(X_test)
 print("Accuracy: ", metrics.accuracy_score(y_test, y_pred))
 print("Precision: ", metrics.precision_score(y_test, y_pred, average='weighted'))
