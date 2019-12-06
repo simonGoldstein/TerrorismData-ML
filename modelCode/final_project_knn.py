@@ -70,3 +70,9 @@ y_pred = knn.predict(X_test)
 #print(classification_report(y_valid,validationPredictions))'
 print("The F1 score is: ", f1_score(y_valid, validationPredictions, average="weighted"))
 print("The Accuracy of the model is: ", accuracy_score(y_test, y_pred))
+
+clf = KNeighborsClassifier(n_neighbors=k)
+clf.fit(X_model, y_model)
+validationPredictions = clf.predict(X_valid)
+print(confusion_matrix(y_valid, validationPredictions))
+print(classification_report(y_valid, validationPredictions))

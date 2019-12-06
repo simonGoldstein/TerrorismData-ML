@@ -86,7 +86,14 @@ y_pred = svc.predict(X_test)
 print("Accuracy: ", metrics.accuracy_score(y_test, y_pred))
 print("Precision: ", metrics.precision_score(y_test, y_pred, average='weighted'))
 
-
+clf = sk.svm.SVC(C=0.01, cache_size=200, class_weight=None, coef0=0.0,
+    decision_function_shape='ovr', degree=1, gamma='auto_deprecated',
+    kernel='linear', max_iter=-1, probability=False, random_state=0,
+    shrinking=True, tol=0.001, verbose=False)
+clf.fit(X_model, y_model)
+validationPredictions = clf.predict(X_valid)
+print(confusion_matrix(y_valid, validationPredictions))
+print(classification_report(y_valid, validationPredictions))
 
 """
 hyperparams = {
