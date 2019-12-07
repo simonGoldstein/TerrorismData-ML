@@ -23,7 +23,7 @@ Install Libraries
     pip install numpy
     pip install pandas
     pip install matplotlib
-    pip install sklearn
+    pip install scikit-learn==0.21.3
     pip install dash==1.7.0
     pip install dash-bootstrap-components
 
