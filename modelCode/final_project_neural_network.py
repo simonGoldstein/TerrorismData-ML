@@ -90,12 +90,12 @@ model.compile(optimizer='rmsprop',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
-model.fit(X_train, y_train["gint"], epochs=2)
+model.fit(X_train, y_train["gint"], epochs=1)
 
 results = model.evaluate(X_test, y_test["gint"])
 print('test loss, test acc:', results)
 
-cm = confusion_matrix(y_test, y_pred)
+cm = confusion_matrix(y_test, results)
 FP = cm.sum(axis=0) - np.diag(cm)
 FN = cm.sum(axis=1) - np.diag(cm)
 TP = np.diag(cm)
