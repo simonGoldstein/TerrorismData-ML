@@ -3,3 +3,4 @@ globalterrorismdb_0718dist.csv
 __pycache__/
 .vscode/
 .DS_Store
+trainedModels/
