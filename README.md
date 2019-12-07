@@ -24,8 +24,18 @@ Install Libraries
     pip install pandas
     pip install matplotlib
     pip install sklearn
+    pip install dash==1.7.0
+    pip install dash-bootstrap-components
 
-On Linux run:
+To unzip data and run models:
     
-    unzip gtd.zip -d data
-    python final_project.py
+    cd data
+    unzip gtd.zip
+    cd ../modelCode
+    python3 model_to_run.py
+
+To fetch trained models and run UI:
+
+    chmod +x fetchTrainedModels.sh
+    ./fetchTrainedModels.sh
+    python3 app.py

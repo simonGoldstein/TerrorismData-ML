@@ -9,7 +9,6 @@ import pandas as pd
 
 knnModel = modelSave.loadSk('trainedModels/knn')
 svmModel = modelSave.loadSk('trainedModels/svm-20000')
-# dnnModel = modelSave.loadKeras('trainedModels/dnn-noactivation-1')
 
 external_stylesheets = ["https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"]
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -484,9 +483,6 @@ def updateResults(n_clicks, model, iyear, imonth, iday,
         elif model == 'svm':
             prediction = svmModel.predict(array)
             return False, prediction, True
-        # elif model == 'dnn':
-        #     prediction = dnnModel.predict(array)
-        #     return False, prediction, True
 
 if __name__ == '__main__':
     app.run_server(debug=True)
