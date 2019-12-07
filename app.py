@@ -8,6 +8,8 @@ import numpy as np
 import pandas as pd
 
 knnModel = modelSave.loadSk('trainedModels/knn')
+svmModel = modelSave.loadSk('trainedModels/svm-20000')
+# dnnModel = modelSave.loadKeras('trainedModels/dnn-noactivation-1')
 
 external_stylesheets = ["https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"]
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -332,6 +334,13 @@ app.layout = html.Div([
             html.Div([
                 html.H3('Results'),
 
+                html.H4('Select Model:'),
+                dcc.RadioItems(
+                    id='model',
+                    options=[{'label': 'KNN', 'value': 'knn'},
+                             {'label': 'SVM', 'value': 'svm'}]
+                ),
+
                 html.Button('Compute', id='submit', style={'font-size': 'medium'}),
 
                 html.Div([
@@ -340,9 +349,7 @@ app.layout = html.Div([
 
                 html.Div([
                     html.H4('The predicted terrorist group is:'),
-                    html.H3(id='gname'),
-                    html.H4('with a probability of:'),
-                    html.H4(id='probability')
+                    html.H3(id='gname')
                 ], id='results', hidden=True)
             ], className='card-content')
         ], className='card')
@@ -383,36 +390,36 @@ app.callback(
     [State("weapons-help", "is_open")],
 )(toggle_modal)
 
-# @app.callback([Output('iyear', 'value'),
-#                Output('imonth', 'value'),
-#                Output('iday', 'value'),
-#                Output('extended', 'value'),
-#                Output('country', 'value'),
-#                Output('region', 'value'),
-#                Output('vicinity', 'value'),
-#                Output('success', 'value'),
-#                Output('suicide', 'value'),
-#                Output('attacktype1', 'value'),
-#                Output('targtype1', 'value'),
-#                Output('weaptype1', 'value'),
-#                Output('property', 'value'),
-#                Output('individual', 'value'),
-#                Output('INT_LOG', 'value'),
-#                Output('INT_IDEO', 'value'),
-#                Output('INT_MISC', 'value')],
-#               [Input('submit', 'n_clicks')])
-# def initialize(n_clicks):
-#     if not n_clicks:
-#         return 2019, 12, 1, 1, 14, 12, 0, 1, 1, 3, 2, 1, -9, 1, 1, 0, 0
-#     else:
-#         raise dash.exceptions.PreventUpdate
+@app.callback([Output('iyear', 'value'),
+               Output('imonth', 'value'),
+               Output('iday', 'value'),
+               Output('extended', 'value'),
+               Output('country', 'value'),
+               Output('region', 'value'),
+               Output('vicinity', 'value'),
+               Output('success', 'value'),
+               Output('suicide', 'value'),
+               Output('attacktype1', 'value'),
+               Output('targtype1', 'value'),
+               Output('weaptype1', 'value'),
+               Output('property', 'value'),
+               Output('individual', 'value'),
+               Output('INT_LOG', 'value'),
+               Output('INT_IDEO', 'value'),
+               Output('INT_MISC', 'value')],
+              [Input('submit', 'n_clicks')])
+def initialize(n_clicks):
+    if not n_clicks:
+        return 1992, 12, 1, 1, 14, 12, 0, 1, 1, 3, 2, 1, -9, 1, 1, 0, 0
+    else:
+        raise dash.exceptions.PreventUpdate
 
 @app.callback([Output('results', 'hidden'),
                Output('gname', 'children'),
-               Output('probability', 'children'),
                Output('error', 'hidden')],
               [Input('submit', 'n_clicks')],
-              [State('iyear', 'value'),
+              [State('model', 'value'),
+               State('iyear', 'value'),
                State('imonth', 'value'),
                State('iday', 'value'),
                State('extended', 'value'),
@@ -429,7 +436,7 @@ app.callback(
                State('INT_LOG', 'value'),
                State('INT_IDEO', 'value'),
                State('INT_MISC', 'value')])
-def updateResults(n_clicks, iyear, imonth, iday, 
+def updateResults(n_clicks, model, iyear, imonth, iday, 
                   extended, country, region, 
                   vicinity, success, suicide, 
                   attacktype1, targtype1, weaptype1, 
@@ -469,14 +476,17 @@ def updateResults(n_clicks, iyear, imonth, iday,
     array = array.reshape(1, -1)
 
     if np.any(array == None):
-        return True, 0, 0, False
+        return True, 0, False
     else:
-        probs = knnModel.predict_proba(array)
-        maxLoc = np.argmax(probs)
-        maxProb = probs[0][maxLoc]
-        pred = knnModel.classes_[maxLoc]
-
-        return False, pred, maxProb, True
+        if model == 'knn':
+            prediction = knnModel.predict(array)
+            return False, prediction, True
+        elif model == 'svm':
+            prediction = svmModel.predict(array)
+            return False, prediction, True
+        # elif model == 'dnn':
+        #     prediction = dnnModel.predict(array)
+        #     return False, prediction, True
 
 if __name__ == '__main__':
     app.run_server(debug=True)
